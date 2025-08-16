@@ -52,7 +52,7 @@ public class TreeController {
         BST bst;
 
         if (balanceTree) {
-            int[] sorted = numberList.stream().mapToInt(i -> i).sorted().toArray();
+            int[] sorted = numberList.stream().distinct().sorted().mapToInt(i -> i).toArray();
             bst = BST.fromSortedArray(sorted);
         } else {
             bst = new BST();

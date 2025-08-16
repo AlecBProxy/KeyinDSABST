@@ -11,12 +11,10 @@
         align-items: center;
         padding: 40px 20px;
       }
-
       h1 {
         color: #2f4f4f;
         margin-bottom: 30px;
       }
-
       form {
         background-color: #ffffff;
         padding: 30px;
@@ -28,7 +26,6 @@
         flex-direction: column;
         gap: 20px;
       }
-
       input[type="text"] {
         padding: 10px 15px;
         font-size: 16px;
@@ -37,7 +34,6 @@
         width: 100%;
         box-sizing: border-box;
       }
-
       button {
         padding: 12px 20px;
         font-size: 16px;
@@ -45,14 +41,12 @@
         border: none;
         cursor: pointer;
         color: white;
-        background-color: #127467;
+        background-color: #228b22;
         transition: background-color 0.2s;
       }
-
       button:hover {
-        background-color: #2a75a0;
+        background-color: #196619;
       }
-
       #resultJson {
         width: 100%;
         min-height: 150px;
@@ -64,14 +58,12 @@
         white-space: pre-wrap;
         border: 1px solid #ccc;
       }
-
       .visualize-section {
         margin-top: 20px;
         width: 100%;
         max-width: 500px;
         text-align: center;
       }
-
       .visualize-section button {
         width: 100%;
       }
@@ -79,7 +71,6 @@
   </head>
   <body>
     <h1>Binary Search Tree Input</h1>
-
     <form id="numberForm">
       <label for="numbers">Enter numbers (comma-separated):</label>
       <input
@@ -94,27 +85,27 @@
       </label>
       <button type="submit">Submit Numbers</button>
     </form>
-
     <div id="resultJson">Result JSON will appear here...</div>
-
     <div class="visualize-section">
       <h2>View visual representation of latest tree</h2>
       <button onclick="location.href='/visualize'">View Tree</button>
     </div>
-
     <script>
       const form = document.getElementById("numberForm");
       const resultDiv = document.getElementById("resultJson");
-
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-
         const numbers = document.getElementById("numbers").value;
+        const balanceTree = document.getElementById("balanceTree").checked;
 
         fetch("/process-numbers", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: "numbers=" + encodeURIComponent(numbers),
+          body:
+            "numbers=" +
+            encodeURIComponent(numbers) +
+            "&balanceTree=" +
+            balanceTree,
         })
           .then((response) => response.json())
           .then((data) => {
