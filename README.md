@@ -1,12 +1,13 @@
-# BST App (Spring Boot)
+# Binary Search Tree DSA App (Spring Boot)
 
-Alec's DSA project: enter numbers, build a Binary Search Tree, view previous trees, and optionally return a balanced BST.
+Enter numbers, build a Binary Search Tree, view previous trees, and (optionally) return a balanced BST.
 
 ## Requirements
 - Java 17+
 - Maven 3.9+
 
 ## Quick Start
+To start, please ensure that the application is running on a local port
 ```bash
 mvn spring-boot:run
 ```
@@ -26,7 +27,7 @@ Open:
 numbers=2,1,4,3,5
 ```
 
-Returns JSON like:
+Sample JSON return format:
 ```json
 {"value":2,"left":{"value":1,"left":null,"right":null},"right":{"value":4,"left":{"value":3,"left":null,"right":null},"right":{"value":5,"left":null,"right":null}}}
 ```
@@ -37,6 +38,6 @@ Run:
 mvn test
 ```
 Includes 3 unit tests in `BSTTests.java`:
-- root set after first insert
+- testing to see if the root was set after first insert
 - left/right placement after inserts
 - balanced tree from sorted array
