@@ -48,7 +48,7 @@
         background-color: #196619;
       }
       #resultJson {
-        width: 100%;
+        width: 500px;
         min-height: 150px;
         padding: 10px;
         font-family: monospace;
@@ -57,14 +57,15 @@
         overflow-x: auto;
         white-space: pre-wrap;
         border: 1px solid #ccc;
+        padding: 30px;
       }
-      .visualize-section {
+      .sub-section {
         margin-top: 20px;
         width: 100%;
         max-width: 500px;
         text-align: center;
       }
-      .visualize-section button {
+      .sub-section button {
         width: 100%;
       }
     </style>
@@ -86,9 +87,13 @@
       <button type="submit">Submit Numbers</button>
     </form>
     <div id="resultJson">Result JSON will appear here...</div>
-    <div class="visualize-section">
+    <div class="sub-section">
       <h2>View visual representation of latest tree</h2>
       <button onclick="location.href='/visualize'">View Tree</button>
+    </div>
+    <div class="sub-section">
+      <h2>View previous trees</h2>
+      <button onclick="location.href='/previous-trees'">Previous Trees</button>
     </div>
     <script>
       const form = document.getElementById("numberForm");
