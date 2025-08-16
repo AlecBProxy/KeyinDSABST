@@ -33,22 +33,28 @@ public class TreeController {
     // Accept numbers, build BST, return JSON
     @PostMapping("/process-numbers")
     public String processNumbers(@RequestParam String numbers, Model model) {
+        // Parse and insert numbers
         String[] parts = numbers.split(",");
         BST bst = new BST();
         for (String p : parts) {
             bst.insert(Integer.parseInt(p.trim()));
         }
 
+        // Convert tree root to JSON
         String jsonTree = gson.toJson(bst.root);
 
+        // Save to DB
         TreeRecord record = new TreeRecord();
         record.setInputNumbers(numbers);
         record.setTreeJson(jsonTree);
         treeRecordRepository.save(record);
 
-        model.addAttribute("treeJson", bst.root);
-        return "tree-visual";
+        // Pass JSON (string) to template
+        model.addAttribute("treeJson", jsonTree);
+
+        return "tree-visual"; // loads tree-visual.html
     }
+
 
     @GetMapping("/previous-trees")
     public String viewPreviousTrees(Model model) {

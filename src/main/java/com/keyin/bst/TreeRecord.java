@@ -14,7 +14,7 @@ public class TreeRecord {
     private String inputNumbers;
 
     @Lob
-    @Column(columnDefinition = "CLOB")
+    @Column(name = "tree_json", columnDefinition = "TEXT")
     private String treeJson;
 
     private boolean balanced;

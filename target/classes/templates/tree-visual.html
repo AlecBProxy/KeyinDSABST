@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>BST Visualizer</title>
     <style>
@@ -15,7 +15,9 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const tree = [[${treeJson}]];
+    // Inject raw JSON string and parse it
+    const tree = JSON.parse([[${treeJson}]]);
+    console.log("Tree JSON:", tree);
 
     const canvas = document.getElementById("treeCanvas");
     const ctx = canvas.getContext("2d");
