@@ -13,8 +13,8 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.2</version>
-    <relativePath/> 
+    <version>3.2.0</version>
+    <relativePath/>
   </parent>
 
   <properties>
@@ -31,6 +31,11 @@
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
@@ -44,7 +49,6 @@
       <artifactId>gson</artifactId>
       <version>2.11.0</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -60,5 +64,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
