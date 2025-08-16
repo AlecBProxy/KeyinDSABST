@@ -11,10 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-
-
 
 @Controller
 public class TreeController {
@@ -22,7 +21,6 @@ public class TreeController {
     @Autowired
     private TreeRecordRepository treeRecordRepository;
     private final Gson gson = new Gson();
-
 
     public TreeController(TreeRecordRepository treeRecordRepository) {
         this.treeRecordRepository = treeRecordRepository;
@@ -33,9 +31,21 @@ public class TreeController {
         return "enter-numbers";
     }
 
+    @GetMapping("/previous-trees/latest")
+    @ResponseBody
+    public String getLatestTree() {
+        return treeRecordRepository.findAll()
+                .stream()
+                .reduce((first, second) -> second) // get latest
+                .map(TreeRecord::getTreeJson)
+                .orElse("{}");
+    }
+
+
     // Accept numbers, build BST, return JSON
     @PostMapping("/process-numbers")
-    public String processNumbers(@RequestParam String numbers, Model model) {
+    @ResponseBody
+    public String processNumbers(@RequestParam String numbers) {
         // Parse and insert numbers
         String[] parts = numbers.split(",");
         BST bst = new BST();
@@ -52,12 +62,17 @@ public class TreeController {
         record.setTreeJson(jsonTree);
         treeRecordRepository.save(record);
 
-        // Pass JSON (string) to template
-        model.addAttribute("treeJson", jsonTree);
-
-        return "tree-visual"; // loads tree-visual.html
+        // Return raw JSON string
+        return jsonTree;
     }
 
+    // Serve visualization page (loads tree-visual.html)
+    @GetMapping("/visualize")
+    public String visualizeTree(Model model) {
+        // You could fetch the most recent tree from DB if you want
+        // For now, just return the template
+        return "tree-visual";
+    }
 
     @GetMapping("/previous-trees")
     public String viewPreviousTrees(Model model) {
