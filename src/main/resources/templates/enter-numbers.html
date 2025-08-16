@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Numbers</title>
+  <style>
+    body{font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px;}
+    input[type=text]{width:100%; padding:12px; margin:8px 0; border:1px solid #ccc; border-radius:8px;}
+    button{padding:10px 16px; border:0; border-radius:10px; cursor:pointer; margin-right:8px;}
+    .primary{background:#2563eb; color:white;}
+    .secondary{background:#e5e7eb;}
+    .row{display:flex; gap:8px; flex-wrap:wrap;}
+    pre{background:#0b1020; color:#e2e8f0; padding:16px; border-radius:12px; overflow:auto;}
+  </style>
+</head>
+<body>
+  <h2>Enter Numbers for BST</h2>
+  <form id="bstForm" action="/process-numbers" method="post" class="row">
+    <input type="text" name="numbers" placeholder="e.g. 2,1,4,3,5" required />
+    <label><input type="checkbox" name="balanced" value="true"> Return balanced tree (bonus)</label>
+    <div>
+      <button class="primary" type="submit">Submit</button>
+      <a href="/previous-trees"><button class="secondary" type="button">Show Previous</button></a>
+    </div>
+  </form>
+
+  <h3>Result JSON</h3>
+  <pre id="result">(submit numbers to see the tree)</pre>
+
+  <script>
+    const form = document.getElementById('bstForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const params = new URLSearchParams();
+      for (const [k,v] of data.entries()) params.append(k, v);
+      const res = await fetch('/process-numbers', { method: 'POST', body: params });
+      const text = await res.text();
+      document.getElementById('result').textContent = text;
+    });
+  </script>
+</body>
+</html>

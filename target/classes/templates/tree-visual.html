@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BST Visualizer</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h2>Your Binary Search Tree</h2>
+<canvas id="treeCanvas" width="800" height="400"></canvas>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const tree = [[${treeJson}]]; // This is now a real object, not a string
+
+    const canvas = document.getElementById("treeCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const nodeRadius = 15;
+    const levelHeight = 60;
+
+    function drawNode(node, x, y, levelSpacing) {
+        if (!node) return;
+
+        // Left branch
+        if (node.left) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x - levelSpacing, y + levelHeight);
+            ctx.stroke();
+            drawNode(node.left, x - levelSpacing, y + levelHeight, levelSpacing / 2);
+        }
+
+        // Right branch
+        if (node.right) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + levelSpacing, y + levelHeight);
+            ctx.stroke();
+            drawNode(node.right, x + levelSpacing, y + levelHeight, levelSpacing / 2);
+        }
+
+        // Draw node
+        ctx.beginPath();
+        ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = "#66b3ff";
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(node.value, x, y);
+    }
+
+    ctx.font = "14px Arial";
+    drawNode(tree, canvas.width / 2, 40, 200);
+    /*]]>*/
+</script>
+
+</body>
+</html>
