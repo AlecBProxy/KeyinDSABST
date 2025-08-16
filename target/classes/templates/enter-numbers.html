@@ -1,82 +1,128 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Enter Numbers</title>
+    <title>Enter Numbers - BST Visualizer</title>
     <style>
       body {
-        font-family: system-ui, sans-serif;
-        max-width: 720px;
-        margin: 40px auto;
-        padding: 0 16px;
-      }
-      input[type="text"] {
-        width: 100%;
-        padding: 12px;
-        margin: 8px 0;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-      }
-      button {
-        padding: 10px 16px;
-        border: 0;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-right: 8px;
-      }
-      .primary {
-        background: #2563eb;
-        color: white;
-      }
-      .secondary {
-        background: #e5e7eb;
-      }
-      .row {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f5;
         display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
       }
-      pre {
-        background: #0b1020;
-        color: #e2e8f0;
-        padding: 16px;
+
+      h1 {
+        color: #2f4f4f;
+        margin-bottom: 30px;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 30px;
         border-radius: 12px;
-        overflow: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      input[type="text"] {
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        color: white;
+        background-color: #127467;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: #2a75a0;
+      }
+
+      #resultJson {
+        width: 100%;
+        min-height: 150px;
+        padding: 10px;
+        font-family: monospace;
+        background-color: #e8f5e9;
+        border-radius: 8px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        border: 1px solid #ccc;
+      }
+
+      .visualize-section {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+      }
+
+      .visualize-section button {
+        width: 100%;
       }
     </style>
   </head>
   <body>
-    <h2>Enter Numbers for BST</h2>
-    <form id="bstForm" action="/process-numbers" method="post" class="row">
-      <input type="text" name="numbers" placeholder="e.g. 2,1,4,3,5" required />
-      <label
-        ><input type="checkbox" name="balanced" value="true" /> Return balanced
-        tree (bonus)</label
-      >
-      <div>
-        <button class="primary" type="submit">Submit</button>
-        <a href="/previous-trees"
-          ><button class="secondary" type="button">Show Previous</button></a
-        >
-      </div>
+    <h1>Binary Search Tree Input</h1>
+
+    <form id="numberForm">
+      <label for="numbers">Enter numbers (comma-separated):</label>
+      <input
+        type="text"
+        id="numbers"
+        name="numbers"
+        placeholder="e.g., 3,1,4,5,2"
+      />
+      <label>
+        <input type="checkbox" id="balanceTree" name="balanceTree" />
+        Return balanced tree
+      </label>
+      <button type="submit">Submit Numbers</button>
     </form>
 
-    <h3>Result JSON</h3>
-    <pre id="result">(submit numbers to see the json tree)</pre>
+    <div id="resultJson">Result JSON will appear here...</div>
+
+    <div class="visualize-section">
+      <h2>View visual representation of latest tree</h2>
+      <button onclick="location.href='/visualize'">View Tree</button>
+    </div>
 
     <script>
-      const form = document.getElementById("bstForm");
-      form.addEventListener("submit", async (e) => {
+      const form = document.getElementById("numberForm");
+      const resultDiv = document.getElementById("resultJson");
+
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
-        const data = new FormData(form);
-        const params = new URLSearchParams();
-        for (const [k, v] of data.entries()) params.append(k, v);
-        const res = await fetch("/process-numbers", {
+
+        const numbers = document.getElementById("numbers").value;
+
+        fetch("/process-numbers", {
           method: "POST",
-          body: params,
-        });
-        const text = await res.text();
-        document.getElementById("result").textContent = text;
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "numbers=" + encodeURIComponent(numbers),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            resultDiv.textContent = JSON.stringify(data, null, 2);
+          })
+          .catch((err) => {
+            resultDiv.textContent = "Error: " + err;
+          });
       });
     </script>
   </body>

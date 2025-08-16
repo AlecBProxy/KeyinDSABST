@@ -45,32 +45,34 @@ public class TreeController {
     // Accept numbers, build BST, return JSON
     @PostMapping("/process-numbers")
     @ResponseBody
-    public String processNumbers(@RequestParam String numbers) {
-        // Parse and insert numbers
-        String[] parts = numbers.split(",");
-        BST bst = new BST();
-        for (String p : parts) {
-            bst.insert(Integer.parseInt(p.trim()));
+    public String processNumbers(@RequestParam String numbers,
+                                @RequestParam(required = false) boolean balanceTree) {
+
+        List<Integer> numberList = parseNumbers(numbers);
+        BST bst;
+
+        if (balanceTree) {
+            int[] sorted = numberList.stream().mapToInt(i -> i).sorted().toArray();
+            bst = BST.fromSortedArray(sorted);
+        } else {
+            bst = new BST();
+            for (int n : numberList) bst.insert(n);
         }
 
-        // Convert tree root to JSON
         String jsonTree = gson.toJson(bst.root);
 
-        // Save to DB
         TreeRecord record = new TreeRecord();
         record.setInputNumbers(numbers);
         record.setTreeJson(jsonTree);
+        record.setBalanced(balanceTree);
         treeRecordRepository.save(record);
 
-        // Return raw JSON string
         return jsonTree;
     }
 
-    // Serve visualization page (loads tree-visual.html)
+
     @GetMapping("/visualize")
     public String visualizeTree(Model model) {
-        // You could fetch the most recent tree from DB if you want
-        // For now, just return the template
         return "tree-visual";
     }
 

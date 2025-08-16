@@ -14,7 +14,6 @@
     <canvas id="treeCanvas" width="800" height="400"></canvas>
 
     <script>
-      // Fetch the most recent tree JSON (adjust endpoint if needed)
       fetch("/previous-trees/latest")
         .then((response) => response.json())
         .then((tree) => {
