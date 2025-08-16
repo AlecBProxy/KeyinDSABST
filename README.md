@@ -6,6 +6,24 @@ Enter numbers, build a Binary Search Tree, view previous trees, and (optionally)
 - Java 17+
 - Maven 3.9+
 
+## Thymeleaf in this Project
+
+This application uses **Thymeleaf** as its server-side template engine.  
+
+### What is Thymeleaf?
+
+Thymeleaf is a modern Java template engine for web applications. It allows you to create **dynamic HTML pages** by embedding variables and expressions directly into your HTML. Unlike rendering pure JSON responses, Thymeleaf lets the server generate fully-formed HTML views that can include dynamic content, loops, conditionals, and more.
+
+### Why Thymeleaf is used here
+
+In this project, Thymeleaf is used to:
+
+- Render the **number input form** for users to enter a series of numbers (`/enter-numbers` route).
+- Display the **visual representation of the Binary Search Tree** after processing (`/process-numbers` route).
+- Show the **list of previously created trees** retrieved from the database (`/previous-trees` route).
+
+Using Thymeleaf allows the server to directly inject dynamic data, such as the JSON representation of a BST, into the HTML. This enables interactive pages without needing a separate frontend framework like React or Angular.
+
 ## Quick Start
 To start, please ensure that the application is running on a local port
 ```bash
