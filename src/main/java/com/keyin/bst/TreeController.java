@@ -36,7 +36,7 @@ public class TreeController {
     public String getLatestTree() {
         return treeRecordRepository.findAll()
                 .stream()
-                .reduce((first, second) -> second) // get latest
+                .reduce((first, second) -> second)
                 .map(TreeRecord::getTreeJson)
                 .orElse("{}");
     }
