@@ -1,4 +1,4 @@
-package com.example.bst;
+package com.keyin.bst;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

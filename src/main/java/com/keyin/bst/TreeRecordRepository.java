@@ -1,4 +1,4 @@
-package com.example.bst;
+package com.keyin.bst;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

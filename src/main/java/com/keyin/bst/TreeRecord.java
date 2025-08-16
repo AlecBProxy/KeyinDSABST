@@ -1,4 +1,4 @@
-package com.example.bst;
+package com.keyin.bst;
 
 import jakarta.persistence.*;
 

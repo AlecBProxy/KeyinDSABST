@@ -1,4 +1,4 @@
-package com.example.bst;
+package com.keyin.bst;
 
 public class BST {
     public TreeNode root;

@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Previous Trees</title>
-  <style>
-    body{font-family: system-ui, sans-serif; max-width: 1000px; margin: 40px auto; padding: 0 16px;}
-    table{width:100%; border-collapse: collapse;}
-    th, td{border:1px solid #e5e7eb; padding:8px; vertical-align: top;}
-    pre{white-space: pre-wrap; word-wrap: break-word; margin: 0;}
-    .tag{font-size:12px; padding:2px 6px; border-radius: 999px; background:#e5e7eb;}
-  </style>
-</head>
-<body>
-  <h2>Previous Trees</h2>
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Input Numbers</th>
-      <th>Balanced?</th>
-      <th>Tree JSON</th>
-    </tr>
-    <tr th:each="tree : ${trees}">
-      <td th:text="${tree.id}">1</td>
-      <td th:text="${tree.inputNumbers}">2,1,4,3,5</td>
-      <td><span class="tag" th:text="${tree.balanced} ? 'Yes' : 'No'">No</span></td>
-      <td><pre th:text="${tree.treeJson}"></pre></td>
-    </tr>
-  </table>
-  <p><a href="/enter-numbers">Back</a></p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Previous Trees</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 16px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #e5e7eb;
+        padding: 8px;
+        vertical-align: top;
+      }
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin: 0;
+      }
+      .tag {
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 999px;
+        background: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Previous Trees</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Input Numbers</th>
+        <th>Balanced?</th>
+        <th>Tree JSON</th>
+      </tr>
+      <tr th:each="tree : ${trees}">
+        <td th:text="${tree.id}">1</td>
+        <td th:text="${tree.inputNumbers}">2,1,4,3,5</td>
+        <td>
+          <span class="tag" th:text="${tree.balanced} ? 'Yes' : 'No'">No</span>
+        </td>
+        <td><pre th:text="${tree.treeJson}"></pre></td>
+      </tr>
+    </table>
+    <p><a href="/enter-numbers">Back</a></p>
+  </body>
 </html>
